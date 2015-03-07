@@ -60,9 +60,7 @@
 var concat = require('concat-stream')
 process.stdin
 	.pipe(concat(function(data) {
-		if (data === 'exit')
-			process.exit(1)
-		process.stdout.write(data.toString().split('').reverse().join(''))
+		console.log(data.toString().split('').reverse().join(''))
 	}))
 // ▲6. Ex6: CONCAT
 
