@@ -27,36 +27,43 @@
 // 	this.push(null);
 // }
 // ▲4. Ex4: TRANSFORM
-
+	
 // ▼5. Ex5: LINES
-var split = require('split');
-var through2 = require('through2');
+// var split = require('split');
+// var through2 = require('through2');
 
-var lineCounter = 0;
+// var lineCounter = 0;
 
-process.stdin
-	.pipe(split())
-	.pipe(through2(write, end))
-	.pipe(process.stdout);
+// process.stdin
+// 	.pipe(split())
+// 	.pipe(through2(write, end))
+// 	.pipe(process.stdout);
 
-function write (line, encoding, next) {	
-	lineCounter ++;
-	var buffer = line.toString();
-	this.push(lineCounter % 2 === 0
-				? buffer.toUpperCase()
-				: buffer.toLowerCase()
-			);
-	this.push('\n');
+// function write (line, encoding, next) {	
+// 	lineCounter ++;
+// 	var buffer = line.toString();
+// 	this.push(lineCounter % 2 === 0
+// 				? buffer.toUpperCase()
+// 				: buffer.toLowerCase()
+// 			);
+// 	this.push('\n');
 
-	next();
-}
+// 	next();
+// }
 
-function end () {
-	this.push(null);
-}
+// function end () {
+// 	this.push(null);
+// }
 // ▲5. Ex5: LINES
 
 // ▼6. Ex6: CONCAT
+var concat = require('concat-stream')
+process.stdin
+	.pipe(concat(function(data) {
+		if (data === 'exit')
+			process.exit(1)
+		process.stdout.write(data.toString().split('').reverse().join(''))
+	}))
 // ▲6. Ex6: CONCAT
 
 // ▼7. Ex7: HTTP SERVER
