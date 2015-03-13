@@ -99,22 +99,29 @@
 // ▲9. Ex9: WEBSOCKETS
 
 // ▼10. Ex10: HTML STREAM
-var through = require('through')
-var trumpet = require('trumpet')
-var tr = trumpet()
-process.stdin.pipe(tr)//.pipe(process.stdout)
-var stream = tr.select('.loud').createStream()
-stream.pipe(through(
-		function(buf) {
-			this.queue(buf.toString().toUpperCase())
-		}, function() {
-			this.queue(null)
-		}
-	)).pipe(stream)
-tr.pipe(process.stdout)
+// var through = require('through')
+// var trumpet = require('trumpet')
+// var tr = trumpet()
+// process.stdin.pipe(tr)//.pipe(process.stdout)
+// var stream = tr.select('.loud').createStream()
+// stream.pipe(through(
+// 		function(buf) {
+// 			this.queue(buf.toString().toUpperCase())
+// 		}, function() {
+// 			this.queue(null)
+// 		}
+// 	)).pipe(stream)
+// tr.pipe(process.stdout)
 // ▲10. Ex10: HTML STREAM
 
 // ▼11. Ex11: DUPLEXER
+var spawn = require('child_process').spawn
+var duplexer = require('duplexer')
+
+module.exports = function(cmd, args) {
+	var ps = spawn(cmd, args)
+	return duplexer(ps.stdin, ps.stdout)
+}
 // ▲11. Ex11: DUPLEXER
 
 // ▼12. Ex12: DUPLEXER REDUX
