@@ -65,29 +65,31 @@
 // ▲6. Ex6: CONCAT
 
 // ▼7. Ex7: HTTP SERVER
-var http = require('http')
-var through = require('through')
-var server = http.createServer(function(req, res) {
-	if (req.method === 'POST') {
-		req.pipe(
-			through(
-				function(buf) {
-					this.queue(buf.toString().toUpperCase())
-				}, function() {
-					this.queue(null)
-				}
-			)
-		).pipe(res)
-	} else {
-		res.end('Not a POST request!')
-	}
-})
+// var http = require('http')
+// var through = require('through')
+// var server = http.createServer(function(req, res) {
+// 	if (req.method === 'POST') {
+// 		req.pipe(
+// 			through(
+// 				function(buf) {
+// 					this.queue(buf.toString().toUpperCase())
+// 				}, function() {
+// 					this.queue(null)
+// 				}
+// 			)
+// 		).pipe(res)
+// 	} else {
+// 		res.end('Not a POST request!')
+// 	}
+// })
 
-server.listen(process.argv[2])
-
+// server.listen(process.argv[2])
 // ▲7. Ex7: HTTP SERVER
 
 // ▼8. Ex8: HTTP CLIENT
+var request = require('request')
+process.stdin.pipe(request.post('http://localhost:8099'))
+	.pipe(process.stdout)
 // ▲8. Ex8: HTTP CLIENT
 
 // ▼9. Ex9: WEBSOCKETS
