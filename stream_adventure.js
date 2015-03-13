@@ -57,14 +57,34 @@
 // ▲5. Ex5: LINES
 
 // ▼6. Ex6: CONCAT
-var concat = require('concat-stream')
-process.stdin
-	.pipe(concat(function(data) {
-		console.log(data.toString().split('').reverse().join(''))
-	}))
+// var concat = require('concat-stream')
+// process.stdin
+// 	.pipe(concat(function(data) {
+// 		console.log(data.toString().split('').reverse().join(''))
+// 	}))
 // ▲6. Ex6: CONCAT
 
 // ▼7. Ex7: HTTP SERVER
+var http = require('http')
+var through = require('through')
+var server = http.createServer(function(req, res) {
+	if (req.method === 'POST') {
+		req.pipe(
+			through(
+				function(buf) {
+					this.queue(buf.toString().toUpperCase())
+				}, function() {
+					this.queue(null)
+				}
+			)
+		).pipe(res)
+	} else {
+		res.end('Not a POST request!')
+	}
+})
+
+server.listen(process.argv[2])
+
 // ▲7. Ex7: HTTP SERVER
 
 // ▼8. Ex8: HTTP CLIENT
