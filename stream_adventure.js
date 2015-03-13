@@ -93,12 +93,25 @@
 // ▲8. Ex8: HTTP CLIENT
 
 // ▼9. Ex9: WEBSOCKETS
-var ws = require('websocket-stream')
-var stream = ws('ws://localhost:8099')
-stream.end('hello\n')
+// var ws = require('websocket-stream')
+// var stream = ws('ws://localhost:8099')
+// stream.end('hello\n')
 // ▲9. Ex9: WEBSOCKETS
 
 // ▼10. Ex10: HTML STREAM
+var through = require('through')
+var trumpet = require('trumpet')
+var tr = trumpet()
+process.stdin.pipe(tr)//.pipe(process.stdout)
+var stream = tr.select('.loud').createStream()
+stream.pipe(through(
+		function(buf) {
+			this.queue(buf.toString().toUpperCase())
+		}, function() {
+			this.queue(null)
+		}
+	)).pipe(stream)
+tr.pipe(process.stdout)
 // ▲10. Ex10: HTML STREAM
 
 // ▼11. Ex11: DUPLEXER
