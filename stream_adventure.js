@@ -87,12 +87,15 @@
 // ▲7. Ex7: HTTP SERVER
 
 // ▼8. Ex8: HTTP CLIENT
-var request = require('request')
-process.stdin.pipe(request.post('http://localhost:8099'))
-	.pipe(process.stdout)
+// var request = require('request')
+// process.stdin.pipe(request.post('http://localhost:8099'))
+// 	.pipe(process.stdout)
 // ▲8. Ex8: HTTP CLIENT
 
 // ▼9. Ex9: WEBSOCKETS
+var ws = require('websocket-stream')
+var stream = ws('ws://localhost:8099')
+stream.end('hello\n')
 // ▲9. Ex9: WEBSOCKETS
 
 // ▼10. Ex10: HTML STREAM
