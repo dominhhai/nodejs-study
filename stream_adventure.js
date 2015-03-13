@@ -115,16 +115,31 @@
 // ▲10. Ex10: HTML STREAM
 
 // ▼11. Ex11: DUPLEXER
-var spawn = require('child_process').spawn
-var duplexer = require('duplexer')
+// var spawn = require('child_process').spawn
+// var duplexer = require('duplexer')
 
-module.exports = function(cmd, args) {
-	var ps = spawn(cmd, args)
-	return duplexer(ps.stdin, ps.stdout)
-}
+// module.exports = function(cmd, args) {
+// 	var ps = spawn(cmd, args)
+// 	return duplexer(ps.stdin, ps.stdout)
+// }
 // ▲11. Ex11: DUPLEXER
 
 // ▼12. Ex12: DUPLEXER REDUX
+var duplexer = require('duplexer2')
+var through = require('through2').obj
+
+module.exports = function(counter) {
+	var countries = []
+	var writeable = through(
+		function (chunk, enc, next) {
+			countries[chunk.country] = (countries[chunk.country] || 0) + 1
+			next()
+		}, function(done) {
+			counter.setCounts(countries)
+			done()
+		})
+	return duplexer(writeable, counter)
+}
 // ▲12. Ex12: DUPLEXER REDUX
 
 // ▼13. Ex13: COMBINER
