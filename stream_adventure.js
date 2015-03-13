@@ -179,10 +179,27 @@
 // ▲13. Ex13: COMBINER
 
 // ▼14. Ex14: CRYPT
-var crypto = require('crypto')
-var stream = crypto.createDecipher('aes256', process.argv[2])
-process.stdin.pipe(stream).pipe(process.stdout)
+// var crypto = require('crypto')
+// var stream = crypto.createDecipher('aes256', process.argv[2])
+// process.stdin.pipe(stream).pipe(process.stdout)
 // ▲14. Ex14: CRYPT
 
 // ▼15. Ex15: SECRETZ
+var crypto = require('crypto')
+var zlib = require('zlib')
+var tar = require('tar')
+var concat = require('concat-stream')
+
+var parser = tar.Parse()
+parser.on('entry', function(entry) {
+	if (entry.type !== 'File') return;
+	var md5 = crypto.createHash('md5', {encoding: 'hex'})
+	entry.pipe(md5).pipe(concat(function(data) {
+		console.log(data + ' ' + entry.path)
+	}))
+})
+process.stdin
+	.pipe(crypto.createDecipher(process.argv[2], process.argv[3]))
+	.pipe(zlib.createGunzip())
+	.pipe(parser)
 // ▲15. Ex15: SECRETZ
