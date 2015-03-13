@@ -143,42 +143,45 @@
 // ▲12. Ex12: DUPLEXER REDUX
 
 // ▼13. Ex13: COMBINER
-var combine = require('stream-combiner')
-var split = require('split')
-var through2 = require('through2')
-var zlib = require('zlib')
+// var combine = require('stream-combiner')
+// var split = require('split')
+// var through2 = require('through2')
+// var zlib = require('zlib')
 
-module.exports = function() {
-	var tmp
-	var gen = through2(
-				function(chunk, enc, next) {
-					var buf = chunk.toString()
-					if (buf.length > 0) {
-						buf = JSON.parse(buf)
-						if (buf.type === 'genre') {
-							if (tmp) {
-								this.push(JSON.stringify(tmp) + '\n')
-							}
-							tmp = {name: buf.name, books: []}
-						} else {
-							tmp.books.push(buf.name)
-						}
-					}
-					next()
-				}, function(done) {
-					if (tmp) {
-						this.push(JSON.stringify(tmp) + '\n')
-					}
-					done()
-				}
-			)
-	return combine(
-			split(), gen, zlib.createGzip()
-		)
-}
+// module.exports = function() {
+// 	var tmp
+// 	var gen = through2(
+// 				function(chunk, enc, next) {
+// 					var buf = chunk.toString()
+// 					if (buf.length > 0) {
+// 						buf = JSON.parse(buf)
+// 						if (buf.type === 'genre') {
+// 							if (tmp) {
+// 								this.push(JSON.stringify(tmp) + '\n')
+// 							}
+// 							tmp = {name: buf.name, books: []}
+// 						} else {
+// 							tmp.books.push(buf.name)
+// 						}
+// 					}
+// 					next()
+// 				}, function(done) {
+// 					if (tmp) {
+// 						this.push(JSON.stringify(tmp) + '\n')
+// 					}
+// 					done()
+// 				}
+// 			)
+// 	return combine(
+// 			split(), gen, zlib.createGzip()
+// 		)
+// }
 // ▲13. Ex13: COMBINER
 
 // ▼14. Ex14: CRYPT
+var crypto = require('crypto')
+var stream = crypto.createDecipher('aes256', process.argv[2])
+process.stdin.pipe(stream).pipe(process.stdout)
 // ▲14. Ex14: CRYPT
 
 // ▼15. Ex15: SECRETZ
