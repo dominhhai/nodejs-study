@@ -89,37 +89,37 @@
 // ▲8. Ex8: HTTP COLLECT
 
 // ▼9. Ex9: JUGGLING ASYNC
-var http = require('http');
-var bl = require('bl');
-var data = [];
-var counter = 0;
+// var http = require('http');
+// var bl = require('bl');
+// var data = [];
+// var counter = 0;
 
-function printData() {
-	for (var i = 0; i< 3; i++) {
-		console.log(data[i]);
-	}
-}
+// function printData() {
+// 	for (var i = 0; i< 3; i++) {
+// 		console.log(data[i]);
+// 	}
+// }
 
-function loadData(index) {
-	http.get(process.argv[2 + index], function(resp) {
-		resp.pipe(bl(function(err, buf) {
-			// console.log(index);
-			if (err) {
-				data[index] = err.toString();
-			} else {
-				data[index] = buf.toString();
-			}
-			counter ++;
-			if (counter === 3) {
-				printData();
-			}
-		}));
-	});
-}
+// function loadData(index) {
+// 	http.get(process.argv[2 + index], function(resp) {
+// 		resp.pipe(bl(function(err, buf) {
+// 			// console.log(index);
+// 			if (err) {
+// 				data[index] = err.toString();
+// 			} else {
+// 				data[index] = buf.toString();
+// 			}
+// 			counter ++;
+// 			if (counter === 3) {
+// 				printData();
+// 			}
+// 		}));
+// 	});
+// }
 
-for (var i = 0; i < 3; i++) {
-	loadData(i);
-}
+// for (var i = 0; i < 3; i++) {
+// 	loadData(i);
+// }
 // ▲9. Ex9: JUGGLING ASYNC
 
 // ▼10. Ex10: TIME SERVER
