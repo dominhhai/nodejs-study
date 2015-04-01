@@ -173,20 +173,42 @@
 // ▲15. Ex15: Async Loops
 
 // ▼16. Ex16: Recursion
-module.exports = function getDependencies(tree) {
-	if (tree['dependencies'] == 'undefined') return
-	var depen = tree['dependencies']
-	var keys = Object.keys(depen)
-	var list = []
-	keys.forEach(function(val, id) {
-		console.log(depen[val] + '@' + depen['version'])
-		getDependencies(val)
-	})
-}
+// module.exports = function getDependencies(tree, initial) {
+// 	initial = initial || []
+
+// 	var depen = tree.dependencies || {}
+// 	var keys = Object.keys(depen)
+
+// 	keys.forEach(function(val, id) {
+// 		var obj = depen[val]
+// 		var rls = val + '@' + depen[val]['version']
+
+// 		if (initial.indexOf(rls) === -1)
+// 			initial.push(rls)
+
+// 		getDependencies(depen[val], initial)
+// 	})
+
+// 	return initial.sort()
+// }
 // ▲16. Ex16: Recursion
 
-// ▼17. Ex17: 
-// ▲17. Ex17:
+// ▼17. Ex17: Currying
+// function curryN(fn, n) {
+//   // If `n` argument was omitted, use the function .length property.
+//   if (typeof n !== 'number') n = fn.length
 
-// ▼18. Ex18: 
-// ▲18. Ex18:
+// 	return function (arg) {
+// 	  // Implement rest of function for the final argument
+// 		if (n <= 1) return fn(arg)
+// 		// Otherwise, continue to calling grouped arguments with bind method
+// 		return curryN(fn.bind(null, arg), n - 1)
+// 	}
+// }
+
+// module.exports = curryN
+// ▲17. Ex17: Currying
+
+// ▼18. Ex18: Function Call
+module.exports = Function.prototype.call.bind(Array.prototype.slice)
+// ▲18. Ex18: Function Call
