@@ -55,8 +55,19 @@
 // ▼9. Ex9: TAGGED TEMPLATE STRINGS
 console.log(html`<b>${process.argv[2]} says</b>: "${process.argv[3]}"`)
 
-function html(temp, username, comment) {
-	// return comment.replace('')
-	return temp.toString + username + comment
+function html(temp, ...args) {
+	result = temp[0]
+	for (var i = 0, j = args.length; i < j; i ++) {
+		result += escape(args[i]) + result[i + 1]
+	}
+	return result
+}
+
+function escape(str) {
+	return str.replace(/&/g, '&amp;')
+				.replace(/"/g, '&quot;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/'/g, '&apos;')
 }
 // ▲9. Ex9: TAGGED TEMPLATE STRINGS

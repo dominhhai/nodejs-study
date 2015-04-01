@@ -210,5 +210,27 @@
 // ▲17. Ex17: Currying
 
 // ▼18. Ex18: Function Call
-module.exports = Function.prototype.call.bind(Array.prototype.slice)
+// module.exports = Function.prototype.call.bind(Array.prototype.slice)
 // ▲18. Ex18: Function Call
+
+var obj = {
+    firstName: "Vô",
+    lastName : "Danh",
+
+    mMethod: function(firstName, lastName) {
+        var firstName = firstName || this.firstName
+        var lastName = lastName || this.lastName
+        console.log("Hello " + firstName + " " + lastName)
+    }
+}
+ 
+var obj1 = {
+    firstName: "Ông",
+    lastName : "Ké"
+};
+
+obj.mMethod.apply(obj1, ["Chí", "Phèo"]) // Hello Chí Phèo
+
+var method = Function.call.bind(obj.mMethod)
+
+method(obj1)
