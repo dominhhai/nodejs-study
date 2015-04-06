@@ -1,10 +1,19 @@
 // ▼1. Ex1: BEEP BOOP
+// console.log('BEEP BOOP')
 // ▲1. Ex1: BEEP BOOP
 
 // ▼2. Ex2: USING NPM PACKAGES
+// var uniq = require('uniq')
+// var arr = prompt().split(',')
+// arr = uniq(arr)
+// console.log(arr)
 // ▲2. Ex2: USING NPM PACKAGES
 
 // ▼3. Ex3: SINGLE EXPORT
+var uniquely = require('./mmodule')
+
+var str = uniquely(prompt())
+console.log(str)
 // ▲3. Ex3: SINGLE EXPORT
 
 // ▼4. Ex4: MULTI EXPORT
