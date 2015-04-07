@@ -20,10 +20,28 @@
 // BROWSERIFY-ADVENTURE
 //
 // ▼3. Ex3: SINGLE EXPORT
-var uniq = require('uniq')
+// var uniq = require('uniq')
 
-module.exports = function (str) {
-	return uniq(str.split(','))
-}
+// module.exports = function (str) {
+// 	return uniq(str.split(','))
+// }
 // ▲3. Ex3: SINGLE EXPORT
+
+//
+// BROWSERIFY-ADVENTURE
+//
+// ▼4. Ex4: MULTI EXPORT
+exports.parse = function (str) {	
+	return str.split('\n').map(function (val) {
+		return JSON.parse(val)
+	})
+}
+
+exports.stringify = function (rows) {
+	var arr = rows.map(function (val) {
+		return JSON.stringify(val)
+	})
+	return arr.join('\n')
+}
+// ▲4. Ex4: MULTI EXPORT
 
