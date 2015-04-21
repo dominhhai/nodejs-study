@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Input your name/ password
+  form(action='/login', method='post')
+    input(type='text', name="username")
+    br
+    input(type='password', name="password", style='margin-top: 20px; margin-bottom: 20px;')
+    br
+    input(type='submit', name="login", value="Login")
