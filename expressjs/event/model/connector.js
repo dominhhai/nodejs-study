@@ -1,6 +1,6 @@
 const pg = require('pg')
 
-const config = 'postgres://username:password@127.0.0.1:5432/todo'
+const config = 'postgres://postgres:root@127.0.0.1:5432/event'
 
 module.exports = function (query, cb) {
 	pg.connect(config, function(err, client, done) {
