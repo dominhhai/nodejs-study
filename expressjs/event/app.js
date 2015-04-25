@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -20,6 +21,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  resave: false, // dont save session if unmodified
+  saveUninitialized: false, // dont create session until something stored
+  secret: 'we are men'
+}))
+// session-persisted message middleware
+app.use(function(req, res, next) {
+  var err = req.session.error
+    , msg = req.session.success
+    delete req.session.error
+    delete req.session.success
+    res.locals.message = ''
+    if (err)  res.locals.message = '<p class="msg error">' + err + '</p>'
+    if (msg)  res.locals.message = '<p class="msg success">' + msg + '</p>'
+    next()
+})
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

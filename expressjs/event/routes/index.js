@@ -1,17 +1,35 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../model/connector')
+const express = require('express')
+const router = express.Router()
+const User = require('../model/user')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express Nodemon' });
-  db('select * from users', function(err, result) {
-  	if (err)  return console.err('Error:', err)
-  	console.log('list todos:', result.rows.length)
-  	result.rows.forEach(function(item) {
-  		console.log(JSON.stringify(item))
-  	})  
-  })
-});
+})
 
-module.exports = router;
+/* handle login */
+router.post('/', function(req, res, next) {
+	 User.prototype.login(req.body.username, req.body.password, function(user) {
+	 	if (user) {
+	 		console.log(user)
+		 	req.session.regenerate(function() {
+		 		// Store the user's primary key
+		 		// in the session store to be retrieved
+		 		// or in the case the entire user object
+		 		req.session.user = user
+		 		req.session.success = 'Authenticated as ' + user.name
+	          		+ ' click to <a href="/logout">logout</a>. '
+	          		+ ' You may now access <a href="/restricted">/restricted</a>.';
+
+	        	res.redirect('home')
+		 	})
+		} else {
+		 	req.session.error = 'Authentication failed, please check your '
+	        	+ ' username and password.'
+	        	+ ' (use "tj" and "foobar")';
+	      	res.redirect('/login');
+		}
+	})	 
+})
+
+module.exports = router
