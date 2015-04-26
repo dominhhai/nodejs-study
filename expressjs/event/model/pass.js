@@ -20,6 +20,11 @@ var len = 128;
 var iterations = 12000;
 
 /**
+ * Default Salt
+ */
+exports.PASSWORD_SALT = 'iOd19h+kDBQ1gGWy5EMUhLiprycBvo+AfXjTgf9ZycgLZKWXsFvuelbxPdAaHTUHLKcK5z2GqOQEDYIkQPzXaUdcWASHR8kenCw21HCboNKTUCx+pamiemGHwCX3CLCDh2SXTjuLy9lT03cwXesDLG0BSombX/QNsKdd0XUS2m0='
+
+/**
  * Hashes a password with optional `salt`, otherwise
  * generate a salt for `pass` and invoke `fn(err, salt, hash)`.
  *

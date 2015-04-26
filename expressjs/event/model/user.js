@@ -1,5 +1,5 @@
 var Model = require('./model')
-var hash = require('./pass').hash
+var passHash = require('./pass')
 
 function User() {
 	Model.call(this, 'User')
@@ -12,7 +12,7 @@ User.prototype = new Model()
 User.prototype.constructor = User
 
 User.prototype.login = function(name, pass, cb) {
-	hash(pass, function(err, salt, hash){
+	passHash.hash(pass, passHash.PASSWORD_SALT, function(err, hash) {
   		if (err) throw err
 
   		Model.prototype.db("SELECT * FROM users WHERE name='"+ name

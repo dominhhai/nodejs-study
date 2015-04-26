@@ -2,4 +2,11 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Input your accout
+  form(action='/', method='post')
+    label Username:
+    input(type='text', name='username', placeholder='Your username')
+    label Password:
+    input(type='password', name='password', placeholder='Your password')
+    input(type='submit', name='enter', value='Login')
+  p Do not have an accout? Please register here

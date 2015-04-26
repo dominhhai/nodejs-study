@@ -1,10 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../model/user')
+// var hash = require('../model/pass')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express Nodemon' });
+  // hash.hash('1234567', hash.PASSWORD_SALT, function(err, salt){
+  // 	console.log(salt)
+  // })
 })
 
 /* handle login */

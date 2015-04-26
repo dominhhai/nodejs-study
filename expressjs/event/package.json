@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --debug ./bin/www"
+    "start": "nodemon --debug ./bin/www",
+    "test": "lab -D -c -S -t 100",
+    "test-cov-html": "lab -r html -o coverage.html"
   },
   "dependencies": {
     "body-parser": "~1.12.0",
@@ -17,6 +19,7 @@
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
+    "code": "^1.4.0",
     "lab": "^5.7.0"
   }
 }
