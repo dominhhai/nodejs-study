@@ -31,7 +31,7 @@ router.post('/', function(req, res, next) {
 		 	req.session.error = 'Authentication failed, please check your '
 	        	+ ' username and password.'
 	        	+ ' (use "tj" and "foobar")';
-	      	res.redirect('/login');
+	      	res.redirect('/');
 		}
 	})	 
 })

@@ -1,12 +1,16 @@
 extends layout
 
 block content
-  .page-login
-    h2 Input your accout
-    form(action='/', method='post')
-      label Username:
-      input.form-control(type='text', name='username', placeholder='Your username')
-      label Password:
-      input.form-control(type='password', name='password', placeholder='Your password')
+  .page-login    
+    form.form-horizontal.form-login(action='/', method='post')
+      h2 Input your accout
+      .form-group
+        label.col-sm-2.control-label(for='username') Username
+        .col-sm-10
+          input.form-control.input-lg#username(type='text', name='username', placeholder='Your username')
+      .form-group  
+        label.col-sm-2.control-label(for='password') Password
+        .col-sm-10
+          input.form-control.input-lg#password(type='password', name='password', placeholder='Your password')
       input.btn.btn-lg.btn-primary.btn-block(type='submit', name='enter', value='Login')
-    p Do not have an accout? Please register here
+      a.btn.btn-lg.btn-success.btn-block(href='/register') Register
