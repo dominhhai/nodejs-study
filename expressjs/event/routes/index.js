@@ -24,8 +24,13 @@ router.post('/', function(req, res, next) {
 		 		req.session.success = 'Authenticated as ' + user.name
 	          		+ ' click to <a href="/logout">logout</a>. '
 	          		+ ' You may now access <a href="/restricted">/restricted</a>.';
+	          	
+	          	if (req.session.originalUrl) {
+	          		var originalPage = req.session.originalUrl
+	          		delete req.session.originalUrl
+	          	}
 
-	        	res.redirect('home')
+	        	res.redirect(originalPage || 'home')
 		 	})
 		} else {
 		 	req.session.error = 'Authentication failed, please check your '
