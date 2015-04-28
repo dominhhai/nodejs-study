@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   resave: false, // dont save session if unmodified
-  saveUninitialized: false, // dont create session until something stored
+  saveUninitialized: true, // create session when has request
   secret: 'we are men'
 }))
 // session-persisted message middleware

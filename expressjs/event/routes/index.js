@@ -14,24 +14,18 @@ router.get('/', function(req, res, next) {
 /* handle login */
 router.post('/', function(req, res, next) {
 	 User.prototype.login(req.body.username, req.body.password, function(user) {
-	 	if (user) {
-	 		console.log(user)
-		 	req.session.regenerate(function() {
-		 		// Store the user's primary key
-		 		// in the session store to be retrieved
-		 		// or in the case the entire user object
-		 		req.session.user = user
-		 		req.session.success = 'Authenticated as ' + user.name
-	          		+ ' click to <a href="/logout">logout</a>. '
-	          		+ ' You may now access <a href="/restricted">/restricted</a>.';
-	          	
-	          	if (req.session.originalUrl) {
-	          		var originalPage = req.session.originalUrl
-	          		delete req.session.originalUrl
-	          	}
+	 	if (user) {	 		
+		 	req.session.user = user
+	 		req.session.success = 'Authenticated as ' + user.name
+          		+ ' click to <a href="/logout">logout</a>. '
+          		+ ' You may now access <a href="/restricted">/restricted</a>.';
+          	
+          	if (req.session.originalUrl) {
+          		var originalPage = req.session.originalUrl
+          		delete req.session.originalUrl
+          	}
 
-	        	res.redirect(originalPage || 'home')
-		 	})
+        	res.redirect(originalPage || 'home')
 		} else {
 		 	req.session.error = 'Authentication failed, please check your '
 	        	+ ' username and password.'
