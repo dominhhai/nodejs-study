@@ -44,7 +44,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(authen({
     'login': '/',
     'home': '/home',
-    'userSession': 'user',
     'referer': 'originalUrl',
 }))
 
