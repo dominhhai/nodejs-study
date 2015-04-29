@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
+var authen = require('express-authen')
 
 var routes = require('./routes/index');
 var home = require('./routes/home');
@@ -40,18 +41,12 @@ app.use(function(req, res, next) {
 })
 app.use(express.static(path.join(__dirname, 'public')));
 
-// auto redirect to login page
-app.use(function(req, res, next) {
-  // auto redirect to homepage if logged in
-  if (req.originalUrl === '/' && req.session.user)
-    return res.redirect('/home')
-  // stay on not logged in login page and other logged in other pages
-  if (req.originalUrl === '/' || req.session.user)
-    return next()
-  // redirect to login page if not login
-  req.session.originalUrl = req.originalUrl
-  return res.redirect('/')
-})
+app.use(authen({
+    'login': '/',
+    'home': '/home',
+    'userSession': 'user',
+    'referer': 'originalUrl',
+}))
 
 app.use('/', routes);
 app.use('/users', users);
