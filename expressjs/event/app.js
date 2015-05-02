@@ -35,8 +35,8 @@ app.use(function(req, res, next) {
     delete req.session.error
     delete req.session.success
     res.locals.message = ''
-    if (err)  res.locals.message = '<p class="msg error">' + err + '</p>'
-    if (msg)  res.locals.message = '<p class="msg success">' + msg + '</p>'
+    if (err)  res.locals = {flag: 'error', message: err}
+    if (msg)  res.locals = {flag: 'success', message: msg}
     next()
 })
 app.use(express.static(path.join(__dirname, 'public')));

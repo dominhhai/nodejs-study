@@ -27,10 +27,8 @@ router.post('/', function(req, res, next) {
 
         	res.redirect(originalPage || 'home')
 		} else {
-		 	req.session.error = 'Authentication failed, please check your '
-	        	+ ' username and password.'
-	        	+ ' (use "tj" and "foobar")';
-	      	res.redirect('/');
+		 	req.session.error = 'Authentication failed, please check your username and password.'
+	      	res.redirect('/')
 		}
 	})	 
 })

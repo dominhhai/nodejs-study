@@ -1,8 +1,10 @@
 extends layout
 
 block content
-  .page-login    
+  .page-login
     form.form-horizontal.form-login(action='/', method='post')
+      if locals.flag === 'error'
+        p.alert.alert-danger=locals.message
       h2 Input your accout
       .form-group
         label.col-sm-2.control-label(for='username') Username
