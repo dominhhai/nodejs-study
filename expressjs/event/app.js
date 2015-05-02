@@ -32,12 +32,16 @@ app.use(session({
 app.use(function(req, res, next) {
   var err = req.session.error
     , msg = req.session.success
-    delete req.session.error
-    delete req.session.success
-    res.locals.message = ''
-    if (err)  res.locals = {flag: 'error', message: err}
-    if (msg)  res.locals = {flag: 'success', message: msg}
-    next()
+  delete req.session.error
+  delete req.session.success
+  res.locals.message = ''
+  if (err)  res.locals = {flag: 'error', message: err}
+  else if (msg)  res.locals = {flag: 'success', message: msg}
+    
+  if (req.session.user)
+    res.user = true
+
+  next()  
 })
 app.use(express.static(path.join(__dirname, 'public')));
 

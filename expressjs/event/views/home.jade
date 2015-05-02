@@ -1,4 +1,8 @@
 extends layout
 
 block content
+  if user
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        p.navbar-text Signed in as Mark Otto
   h1=title

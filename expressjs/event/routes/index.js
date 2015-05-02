@@ -5,7 +5,10 @@ const User = require('../model/user')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express Nodemon' });
+  var val = { title: 'Express Nodemon' }
+  if (req.session.login)
+    val.login = req.session.login
+  res.render('index', val);
   // hash.hash('1234567', hash.PASSWORD_SALT, function(err, salt){
   // 	console.log(salt)
   // })
@@ -28,7 +31,8 @@ router.post('/', function(req, res, next) {
         	res.redirect(originalPage || 'home')
 		} else {
 		 	req.session.error = 'Authentication failed, please check your username and password.'
-	      	res.redirect('/')
+      req.session.login = {username: req.body.username, password: req.body.password}
+      res.redirect('/')
 		}
 	})	 
 })
