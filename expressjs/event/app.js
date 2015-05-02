@@ -37,9 +37,10 @@ app.use(function(req, res, next) {
   res.locals.message = ''
   if (err)  res.locals = {flag: 'error', message: err}
   else if (msg)  res.locals = {flag: 'success', message: msg}
-    
-  if (req.session.user)
-    res.user = true
+
+  if (req.session.user) {
+    res.locals.user = {username: req.session.user.name}
+  }     
 
   next()  
 })
