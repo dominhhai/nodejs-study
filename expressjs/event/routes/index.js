@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   var val = { title: 'Express Nodemon' }
   if (req.session.login)
     val.login = req.session.login
-  res.render('index', val);
+  res.render('index', val)
   // hash.hash('1234567', hash.PASSWORD_SALT, function(err, salt){
   // 	console.log(salt)
   // })
@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
 		 	req.session.user = user
 	 		req.session.success = 'Authenticated as ' + user.name
           		+ ' click to <a href="/logout">logout</a>. '
-          		+ ' You may now access <a href="/restricted">/restricted</a>.';
+          		+ ' You may now access <a href="/restricted">/restricted</a>.'
           	
           	if (req.session.originalUrl) {
           		var originalPage = req.session.originalUrl
@@ -35,6 +35,13 @@ router.post('/', function(req, res, next) {
       res.redirect('/')
 		}
 	})	 
+})
+
+/* handle logout */
+router.all('/logout', function(req, res, next) {
+  req.session.destroy(function(err) {
+    res.redirect('/')
+  })
 })
 
 module.exports = router

@@ -9,9 +9,7 @@ html
     link(rel='stylesheet', href='/css/style.css')
   body
     if user
-      nav.navbar.navbar-default.navbar-fixed-top
-        .container
-          p.navbar-text Signed in #{user.username}
+      include ./navbar.jade
     block content
     script(src='/jquery-1.11.2.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
