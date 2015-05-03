@@ -50,6 +50,7 @@ app.use(authen({
     'login': '/',
     'home': '/home',
     'referer': 'originalUrl',
+    'excepts': ['/register']
 }))
 
 app.use('/', routes);

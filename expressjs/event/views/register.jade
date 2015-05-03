@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .page-login
+    form.form-horizontal.form-login(action='/', method='post')
+      if locals.flag === 'error'
+        p.alert.alert-danger=locals.message
+      h2 Input your accout
+      .form-group
+        label.col-sm-2.control-label(for='username') Username
+        .col-sm-10
+          if login
+            input.form-control.input-lg#username(type='text', name='username', placeholder='Your username', required=true, value=login.username)
+          else
+            input.form-control.input-lg#username(type='text', name='username', placeholder='Your username', required=true)
+      .form-group
+        label.col-sm-2.control-label(for='password') Password
+        .col-sm-10
+          input.form-control.input-lg#password(type='password', name='password', placeholder='Your password', required=true)
+      .form-group
+        label.col-sm-2.control-label(for='password') Confirm Password
+        .col-sm-10
+          input.form-control.input-lg#password(type='password', name='repassword', placeholder='Type password again', required=true)
+      input.btn.btn-lg.btn-primary.btn-block(type='submit', name='enter', value='Register')
+      a.btn.btn-lg.btn-danger.btn-block(href='/') Cancel
