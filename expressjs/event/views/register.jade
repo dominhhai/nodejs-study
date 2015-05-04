@@ -2,7 +2,7 @@ extends layout
 
 block content
   .page-login
-    form.form-horizontal.form-login(action='/', method='post')
+    form.form-horizontal.form-login(action='/register', method='post')
       if locals.flag === 'error'
         p.alert.alert-danger=locals.message
       h2 Input your accout
