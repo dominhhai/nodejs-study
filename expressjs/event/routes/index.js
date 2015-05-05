@@ -1,14 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../model/user')
-// var hash = require('../model/pass')
 
 /* GET login page. */
 router.get('/', function(req, res, next) {
   var val = { title: 'Express Nodemon' }
-  if (req.session.login)
+  if (req.session.login) {
     val.login = req.session.login
-  res.render('index', val)  
+    delete req.session.login
+  }
+  res.render('index', val)
 })
 
 /* handle login */
@@ -16,19 +17,16 @@ router.post('/', function(req, res, next) {
 	 User.login(req.body.username, req.body.password, function(user) {
 	 	if (user) {	 		
 		 	req.session.user = user
-	 		req.session.success = 'Authenticated as ' + user.name
-          		+ ' click to <a href="/logout">logout</a>. '
-          		+ ' You may now access <a href="/restricted">/restricted</a>.'
-          	
-          	if (req.session.originalUrl) {
-          		var originalPage = req.session.originalUrl
-          		delete req.session.originalUrl
-          	}
 
-        	res.redirect(originalPage || 'home')
+    	if (req.session.originalUrl) {
+    		var originalPage = req.session.originalUrl
+    		delete req.session.originalUrl
+    	}
+
+  	  res.redirect(originalPage || 'home')
 		} else {
 		 	req.session.error = 'Authentication failed, please check your username and password.'
-      req.session.login = {username: req.body.username, password: req.body.password}
+      req.session.login = { username: req.body.username, password: req.body.password }
       res.redirect('/')
 		}
 	})
@@ -45,25 +43,38 @@ router.all('/logout', function(req, res, next) {
 router.get('/register', function(req, res, next) {
   // logged-in user should not do this task
   if (req.session.user) return res.redirect('/home')
-  res.render('register', {title: 'User Registration'})
+  var context = {title: 'User Registration'}
+  if (req.session.login) {
+    context.login = req.session.login
+    delete req.session.login
+  }
+  res.render('register', context)
 })
 
 /* handle register */
 router.post('/register', function(req, res, next) {
   var data = req.body
   if (data.password !== data.repassword) {
+    req.session.error = 'Password is not consistent. Please type password again.'
+    req.session.login = { username: data.username }
     return res.redirect('/register')
   }
 
-  User.find({name: data.username}, function(user) {
+  User.find({ name: data.username }, function(user) {
     if (user) {
+      req.session.error = 'This user is already registered, please use other name.'
       return res.redirect('/register')
     }
     User.hash(data.password, function(password) {
       User.register({name: data.username, pass: password}, function(result) {
+        
+        req.session.login = { username: data.username }
+
         if (result) {
+          req.session.success = 'Register Successfully'                    
           return res.redirect('/')
         }
+        req.session.error = 'Register Error! Please try again'
         res.redirect('/register')
       })      
     })

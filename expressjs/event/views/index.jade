@@ -5,6 +5,8 @@ block content
     form.form-horizontal.form-login(action='/', method='post')
       if locals.flag === 'error'
         p.alert.alert-danger=locals.message
+      else if locals.flag === 'success'
+        p.alert.alert-success=locals.message
       h2 Input your accout
       .form-group
         label.col-sm-2.control-label(for='username') Username
