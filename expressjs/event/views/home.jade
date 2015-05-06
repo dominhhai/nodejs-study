@@ -1,4 +1,9 @@
 extends layout
 
-block content 
+block content
   h1=title
+  form.chat(action="")
+    input.m(autocomplete="off")
+    button Send
+   script(src='/socket.io/socket.io.js')
+   <script>var socket = io();</script>
