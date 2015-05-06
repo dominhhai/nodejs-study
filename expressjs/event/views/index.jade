@@ -24,3 +24,5 @@ block content
             input.form-control.input-lg#password(type='password', name='password', placeholder='Your password', required=true)
       input.btn.btn-lg.btn-primary.btn-block(type='submit', name='enter', value='Login')
       a.btn.btn-lg.btn-success.btn-block(href='/register') Register
+  script(src='/socket.io/socket.io.js')
+  <script>var socket = io();</script>
