@@ -16,6 +16,16 @@ exports = module.exports = function (server) {
 	    	socket.on('disconnect', function () {
 	    		console.log('home disconnect')
 	    	})
+
+	    	socket.on('welcome', function(msg){
+	    		console.log('wellcome')
+  			})
+
+	    	socket.emit('welcome', 'welcome message')
+
+	    	home.emit('yes', 'welcome you')
+
+	    	socket.broadcast.emit('hi', 'hello')
 	  	})
 
 	return io
